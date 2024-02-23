@@ -4,7 +4,7 @@ function loadProductsExample() {
         const newProduct = {
             code: faker.random.number({ min: 100000, max: 999999 }).toString(),
             description:faker.commerce.productName(),
-            prize:parseFloat(faker.commerce.price(10, 100, 2))
+            price:parseFloat(faker.commerce.price(10, 100, 2))
         };
 
         productsList.push(newProduct);
@@ -26,7 +26,7 @@ const loadFormProducts=()=>{
         </form>
     `;
     const listadoProducts=document.getElementById('products-list');
-    listadoProducts.style.display='none'
+    listadoProducts.style.display='none';
 }
 
 const createProduct=()=>{
@@ -46,7 +46,10 @@ const createProduct=()=>{
     priceProductInput.value='';
 
     alert("product succesfuly created");
-    console.log(productsList);
+    
+    updateProducts();
+
+    return newProduct
 }
 
 const showListProducts=()=>{
@@ -69,15 +72,14 @@ const showListProducts=()=>{
 
     const backButton=document.createElement('button');
     backButton.textContent='Back to form';
-    backButton.addEventListener('click', backToFormClients);
+    backButton.addEventListener('click', backToFormProducts);
     listadoProducts.appendChild(backButton);
 }
 
-const backToFormClients=()=>{
-    const clientsForm=document.getElementById('products-form');
-    const listadoClients= document.getElementById('products-list');
-    listadoClients.style.display='none';
-    clientsForm.style.display='block';
+const backToFormProducts=()=>{
+    const productsForm=document.getElementById('products-form');
+    const listadoProducts= document.getElementById('products-list');
+    listadoProducts.style.display='none';
+    productsForm.style.display='block';
 }
 
-console.log(productsList);

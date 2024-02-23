@@ -48,8 +48,10 @@ const createClient=()=>{
     emailInput.value='';
 
     alert("customer successfuly created");
-    console.log(clientsList);
+    
+    updateClients();
 
+    return newClient
 }
 
 const showListClient=()=>{
@@ -72,17 +74,17 @@ const showListClient=()=>{
 
     const backButton=document.createElement('button');
     backButton.textContent='Back to form';
-    backButton.addEventListener('click', backToFormProducts);
+    backButton.addEventListener('click', backToFormClients);
     listadoClients.appendChild(backButton);
 
 }
 
-const backToFormProducts=()=>{
-    const clientsForm=document.getElementById('products-form');
-    const listadoClients= document.getElementById('products-list');
+const backToFormClients=()=>{
+    const clientsForm=document.getElementById('clients-form');
+    const listadoClients= document.getElementById('clients-list');
     listadoClients.style.display='none';
     clientsForm.style.display='block';
 }
 
-console.log(clientsList);
+
 

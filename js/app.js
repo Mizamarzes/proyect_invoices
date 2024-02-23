@@ -7,4 +7,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     // Products Module
     loadProductsExample();
     loadFormProducts();
+
+    //Invoices Module
+    loadFormInvoices();
+    
 })
