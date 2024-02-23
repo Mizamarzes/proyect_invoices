@@ -31,21 +31,17 @@ const loadFormClients=()=>{
 }
 
 const createClient=()=>{
-    const nameInput=document.getElementById('nameClient');
-    const ageInput=document.getElementById('ageClient');
-    const emailInput=document.getElementById('emailClient');
-
-    const name=nameInput.value;
-    const age=ageInput.value;
-    const email=emailInput.value;
+    const nameInput=document.getElementById('nameClient').value;
+    const ageInput=document.getElementById('ageClient').value;
+    const emailInput=document.getElementById('emailClient').value;
 
     const newClient={
         id:clientsList.length+1,
-        name:name,
-        age:age,
-        email:email
+        name:nameInput,
+        age:ageInput,
+        email:emailInput
     }
-    clientsList.push(newClient)
+    clientsList.push(newClient);
 
     nameInput.value='';
     ageInput.value='';
@@ -66,7 +62,7 @@ const showListClient=()=>{
     const ul=document.createElement('ul');
 
     for(const client of clientsList){
-        const li=document.createElement('li')
+        const li=document.createElement('li');
         li.textContent= `ID: ${client.id}, Name: ${client.name}, Age: ${client.age}, Email: ${client.email}`
         ul.appendChild(li);
     }
@@ -76,18 +72,17 @@ const showListClient=()=>{
 
     const backButton=document.createElement('button');
     backButton.textContent='Back to form';
-    backButton.addEventListener('click', backToForm);
+    backButton.addEventListener('click', backToFormProducts);
     listadoClients.appendChild(backButton);
 
 }
 
-const backToForm=()=>{
-    const clientsForm=document.getElementById('clients-form');
-    const listadoClients= document.getElementById('clients-list');
+const backToFormProducts=()=>{
+    const clientsForm=document.getElementById('products-form');
+    const listadoClients= document.getElementById('products-list');
     listadoClients.style.display='none';
     clientsForm.style.display='block';
 }
-
 
 console.log(clientsList);
 
