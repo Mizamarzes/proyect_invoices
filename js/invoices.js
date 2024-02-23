@@ -11,7 +11,7 @@ const updateProducts=()=>{
     const productsSelect=document.getElementById('productsInvoice');
     productsSelect.innerHTML='';
     const optionsProducts=generateOptionsProducts();
-    optionsProducts.innerHTML=optionsProducts;
+    productsSelect.innerHTML=optionsProducts;
 }
 
 const loadFormInvoices=()=>{
@@ -37,7 +37,7 @@ const loadFormInvoices=()=>{
             <button type="button" onclick="addItemInvoice()">Add Item</button>
 
             <h3>Items of Invoice</h3>
-            <ul id=list-items-invoice"></ul>
+            <ul id="list-items-invoice"></ul>
 
             <button type="button" onclick="createInvoice()">Create Invoice</button>
             <button type="button" onclick="showListInvoices()">Show List of Invoices</button>
@@ -99,7 +99,7 @@ const createInvoice=()=>{
 
     for(const li of listItems.getElementsByTagName('li')){
         itemsInvoice.push(li.textContent);
-        const quantityMatch=li.textContent.match(/quantity: (\d+)/);
+        const quantityMatch=li.textContent.match(/Quantity: (\d+)/);
         const subTotalMatch=li.textContent.match(/Total: (\d+)/);
 
         if(quantityMatch && subTotalMatch){
@@ -135,6 +135,61 @@ const createInvoice=()=>{
         alert(`Invoice succesfully created! Total: ${totalInvoice}`);
 }
 
+const showListInvoices=()=>{
+    const invoicesForm=document.getElementById('invoice-form');
+    const listadoInvoice=document.getElementById('invoice-list');
+
+    invoicesForm.style.display='none';
+    listadoInvoice.style.display='block';
+
+    const ul=document.createElement('ul');
+    ul.style.listStyleType='none';
+    ul.style.padding='0';
+
+    for(const invoice of invoicesList){
+        const li=document.createElement('li');
+        li.style.marginBottom='15px';
+        li.style.borderBottom='1px solid #ccc';
+        li.style.paddingBottom='10px';
+
+        const date=invoice.date instanceof Date ? invoice.date.toLocalDateString(): 'Date not valid';
+
+        const dateClient=document.createElement('div');
+        dateClient.style.fontWeight='bold';
+        dateClient.textContent=`Date: ${date}, Client: ${invoice.client.name}, Total: ${invoice.total}`;
+        li.appendChild(dateClient)
+
+        const itemsUl=document.createElement('ul');
+        itemsUl.style.listStyleType='none';
+        itemsUl.style.padding='0';
+
+        for(const item of invoice.items){
+            const itemLi=document.createElement("li");
+            itemLi.textContent=`Product: ${item}`;
+            itemsUl.appendChild(itemLi);
+        }
+
+        li.appendChild(itemsUl);
+        ul.appendChild(li);
+    }
+
+    listadoInvoice.innerHTML='';
+    listadoInvoice.appendChild(ul);
+
+    const backButton=document.createElement('button');
+    backButton.textContent='Back to form of invoices';
+    backButton.addEventListener('click', backToFormInvoices);
+    listadoInvoice.appendChild(backButton);
+
+}
+
+const backToFormInvoices=()=>{
+    const invoicesForm=document.getElementById('invoice-form');
+    const listadoFacturas=document.getElementById('invoice-list');
+
+    listadoFacturas.style.display='none';
+    invoicesForm.style.display='block';
+}
 
 
 console.log(invoicesList);
