@@ -190,6 +190,3 @@ const backToFormInvoices=()=>{
     listadoFacturas.style.display='none';
     invoicesForm.style.display='block';
 }
-
-
-console.log(invoicesList);

@@ -1,13 +1,40 @@
 const clientsList=[];
-const loadClients=()=>{
-    for(let i=0; i<=10;i++){
-        const newClient={
-            id:i,
-            name:faker.name.findName(),
-            age: Math.floor(Math.random*30)+18,
-            email: faker.internet.email()
-        };
-        clientsList.push(newClient);
+
+const loadClients=async()=>{
+    try{
+        const response=await fetch('http://localhost:3000/clients');
+
+        if(!response.ok){
+            throw new Error(`Error loading customers, status: ${response.status}`);
+
+        }
+        const clients=await response.json();
+        clientsList.push(...clients);
+
+    }catch(error){
+        console.error(`Error loading customers ${error.message}`);
+    }
+}
+
+const saveClient=async(newClient)=>{
+    try{
+        const response=await fetch('http://localhost:3000/facturas',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(newClient),
+        });
+
+        if(!response.ok){
+            throw new Error(`Error to create client, status: ${response.status}`);
+        }
+        const clientCreated=await response.json();
+
+        console.log(`Client created: ${clientCreated}`); 
+
+    }catch(error){
+        console.error(`Error loading customers ${error.message}`);
     }
 }
 
@@ -42,6 +69,7 @@ const createClient=()=>{
         email:emailInput
     }
     clientsList.push(newClient);
+    saveClient(newClient);
 
     nameInput.value='';
     ageInput.value='';
@@ -54,7 +82,9 @@ const createClient=()=>{
     return newClient
 }
 
-const showListClient=()=>{
+const showListClient=async()=>{
+    clientsList.length=0;
+    await loadClients();
     const formClients = document.getElementById('clients-form');
     const listadoClients= document.getElementById('clients-list');
     
@@ -82,9 +112,12 @@ const showListClient=()=>{
 const backToFormClients=()=>{
     const clientsForm=document.getElementById('clients-form');
     const listadoClients= document.getElementById('clients-list');
+
     listadoClients.style.display='none';
     clientsForm.style.display='block';
 }
+
+console.log(clientsList)
 
 
 
