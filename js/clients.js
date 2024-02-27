@@ -18,7 +18,7 @@ const loadClients=async()=>{
 
 const saveClient=async(newClient)=>{
     try{
-        const response=await fetch('http://localhost:3000/facturas',{
+        const response=await fetch('http://localhost:3000/invoices',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -95,7 +95,7 @@ const showListClient=async()=>{
 
     for(const client of clientsList){
         const li=document.createElement('li');
-        li.textContent= `ID: ${client.id}, Name: ${client.name}, Age: ${client.age}, Email: ${client.email}`
+        li.textContent= `ID: ${client.id}, Name: ${client.name}, Age: ${client.age}`
         ul.appendChild(li);
     }
 

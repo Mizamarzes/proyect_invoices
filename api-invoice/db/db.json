@@ -1,0 +1,115 @@
+{
+  "clients": [
+    {
+      "id": "1",
+      "name": "Cliente1",
+      "age": 25
+    },
+    {
+      "id": "2",
+      "name": "Cliente2",
+      "age": 30
+    },
+    {
+      "id": "3",
+      "name": "Cliente3",
+      "age": 26
+    },
+    {
+      "id": "4",
+      "name": "Cliente4",
+      "age": 26
+    }
+  ],
+  "products": [
+    {
+      "code": "P001",
+      "description": "Producto1",
+      "price": 20,
+      "id": "83bb"
+    },
+    {
+      "code": "P002",
+      "description": "Producto2",
+      "price": 15.5,
+      "id": "05f7"
+    }
+  ],
+  "invoices": [
+    {
+      "id": "1",
+      "date": "2024-02-23",
+      "client": 1,
+      "itemsInvoice": [
+        {
+          "product": "P001",
+          "quantity": 2
+        },
+        {
+          "product": "P002",
+          "quantity": 1
+        }
+      ],
+      "totalInvoice": 55.5
+    },
+    {
+      "id": "2",
+      "date": "2024-02-24",
+      "cliente": 2,
+      "itemsInvoice": [
+        {
+          "product": "P001",
+          "quantity": 3
+        },
+        {
+          "product": "P002",
+          "quantity": 2
+        }
+      ],
+      "totalInvoice": 86.5
+    },
+    {
+      "id": "3",
+      "date": "2024-02-24",
+      "cliente": 3,
+      "itemsInvoice": [
+        {
+          "product": "P001",
+          "quantity": 3
+        },
+        {
+          "product": "P002",
+          "quantity": 2
+        }
+      ],
+      "totalInvoice": 86.5
+    },
+    {
+      "id": "4",
+      "name": "Cliente4",
+      "age": 26
+    },
+    {
+      "id": "4",
+      "date": "2024-02-23",
+      "cliente": 4,
+      "itemsInvoice": [
+        {
+          "product": "P001",
+          "quantity": 2
+        },
+        {
+          "product": "P002",
+          "quantity": 1
+        }
+      ],
+      "totalInvoice": 55.5
+    },
+    {
+      "id": 5,
+      "name": "juanito",
+      "age": "33",
+      "email": "ksjdkadjksad"
+    }
+  ]
+}
