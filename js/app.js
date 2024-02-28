@@ -1,14 +1,15 @@
-document.addEventListener('DOMContentLoaded',()=>{
+document.addEventListener('DOMContentLoaded',async()=>{
     
     // Customer Module
-    loadClients();
+    await loadClients();
     loadFormClients();
 
     // Products Module
-    loadProductsExample();
+    await loadProducts();
     loadFormProducts();
 
     //Invoices Module
+    await loadInvoices();
     loadFormInvoices();
     
 })

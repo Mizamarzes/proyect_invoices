@@ -1,13 +1,38 @@
 const productsList=[];
-function loadProductsExample() {
-    for (let i =1; i <= 10; i++) {
-        const newProduct = {
-            code: faker.random.number({ min: 100000, max: 999999 }).toString(),
-            description:faker.commerce.productName(),
-            price:parseFloat(faker.commerce.price(10, 100, 2))
-        };
 
-        productsList.push(newProduct);
+const loadProducts=async()=>{
+    try{
+        productsList.length=0;
+        const response=await fetch('http://localhost:3000/products');
+
+        if(!response.ok){
+            throw new Error(`Error loading products, status: ${response.status}`);
+        }
+        const products=await response.json();
+        productsList.push(...products);
+    }catch(error){
+        console.error(`Error loading products, ${error.message}`);
+    }
+}
+
+const saveProduct= async(newProduct)=>{
+    try{
+        const response=await fetch('http://localhost:3000/products',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(newProduct),
+        });
+        
+        if(!response.ok){
+            throw new Error(`Error saving product, status: ${response.status}`);
+        }
+        const productCreated= await response.json();
+        console.log(`Created product: ${productCreated}`);
+
+    }catch(error){
+        console.log(`Error saving product ${error.message}`);
     }
 }
 
@@ -29,24 +54,32 @@ const loadFormProducts=()=>{
     listadoProducts.style.display='none';
 }
 
-const createProduct=()=>{
+const createProduct=async()=>{
     const codeproductInput=document.getElementById('idProduct').value;
     const descriptionProductInput=document.getElementById('nameProduct').value;
     const priceProductInput=document.getElementById('priceProduct').value;
 
+    if (!codeproductInput || !descriptionProductInput || !priceProductInput) {
+        alert('Please, complete all of places.');
+        return;
+    }
+
     const newProduct={
+        id:productsList.length+1,
         code:codeproductInput,
         description:descriptionProductInput,
         price:priceProductInput
     }
-    productsList.push(newProduct);
+    await saveProduct(newProduct);
+    await loadProducts();
+    console.log(`Product created: ${newProduct}`);
+    console.log(`List of products ${productsList}`);
 
     codeproductInput.value='';
     descriptionProductInput.value='';
     priceProductInput.value='';
 
     alert("product succesfuly created");
-    
     updateProducts();
 
     return newProduct

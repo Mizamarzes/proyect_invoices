@@ -2,6 +2,7 @@ const clientsList=[];
 
 const loadClients=async()=>{
     try{
+        clientsList.length=0;
         const response=await fetch('http://localhost:3000/clients');
 
         if(!response.ok){
@@ -18,7 +19,7 @@ const loadClients=async()=>{
 
 const saveClient=async(newClient)=>{
     try{
-        const response=await fetch('http://localhost:3000/invoices',{
+        const response=await fetch('http://localhost:3000/clients',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -57,7 +58,7 @@ const loadFormClients=()=>{
     listadoClients.style.display='none'
 }
 
-const createClient=()=>{
+const createClient=async()=>{
     const nameInput=document.getElementById('nameClient').value;
     const ageInput=document.getElementById('ageClient').value;
     const emailInput=document.getElementById('emailClient').value;
@@ -68,8 +69,9 @@ const createClient=()=>{
         age:ageInput,
         email:emailInput
     }
-    clientsList.push(newClient);
-    saveClient(newClient);
+    
+    await saveClient(newClient);
+    await loadClients();
 
     nameInput.value='';
     ageInput.value='';
@@ -83,7 +85,6 @@ const createClient=()=>{
 }
 
 const showListClient=async()=>{
-    clientsList.length=0;
     await loadClients();
     const formClients = document.getElementById('clients-form');
     const listadoClients= document.getElementById('clients-list');

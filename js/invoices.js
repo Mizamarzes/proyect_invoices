@@ -1,5 +1,40 @@
 const invoicesList=[];
 
+const loadInvoices= async()=>{
+    try{
+        const response=await fetch('http://localhost:3000/invoices');
+
+        if(!response.ok){
+            throw new Error(`Error loading invoices, status: ${response.status}`);
+        }
+        const invoices=await response.json();
+        invoicesList.push(...invoices);
+    }catch(error){
+        console.error(`Error loading invoices, ${error.message}`);
+    }
+}
+
+const saveInvoice= async(newInvoice)=>{
+    try{
+        const response=await fetch('http://localhost:3000/invoices',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(newInvoice),
+        });
+
+        if(!response.ok){
+            throw new Error(`Error creating a invoice, status: ${response.status}`);
+        }
+        const invoiceCreated= await response.json();
+        console.log(`Invoice created: ${invoiceCreated}`);
+
+    }catch(error){
+        console.error(`Error loading a invoice ${error.message}`);
+    }
+}
+
 const updateClients=()=>{
     const clientSelect=document.getElementById('clientInvoice');
     clientSelect.innerHTML='';
@@ -117,6 +152,7 @@ const createInvoice=()=>{
     const client=clientsList.find(c=>c.id===parseInt(clientId));
 
         const newInvoice={
+            id:invoicesList.length+1,
             date: date,
             client: client,
             items: itemsInvoice,
@@ -124,6 +160,7 @@ const createInvoice=()=>{
         };
 
         invoicesList.push(newInvoice);
+        saveInvoice(newInvoice);
         
         console.log("Invoice created: ", newInvoice);
         console.log("List of invoices: ", invoicesList)
@@ -152,11 +189,11 @@ const showListInvoices=()=>{
         li.style.borderBottom='1px solid #ccc';
         li.style.paddingBottom='10px';
 
-        const date=invoice.date instanceof Date ? invoice.date.toLocalDateString(): 'Date not valid';
+        const date=invoice.date
 
         const dateClient=document.createElement('div');
         dateClient.style.fontWeight='bold';
-        dateClient.textContent=`Date: ${date}, Client: ${invoice.client.name}, Total: ${invoice.total}`;
+        dateClient.textContent=`Date: ${date}, Client: ${invoice.client}, Total: ${invoice.totalInvoice}`;
         li.appendChild(dateClient)
 
         const itemsUl=document.createElement('ul');
